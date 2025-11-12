@@ -4,17 +4,17 @@ test.describe('Wikipedia Main Page Tests', () => {
   
   test.beforeEach(async ({ page }) => {
     // Navigate to Wikipedia main page
-    await page.goto('https://en.wikipedia.org/wiki/Main_Page', { timeout: 120_000 });
+    await page.goto('https://en.wikipedia.org/wiki/Main_Page', { timeout: 110_000 });
   });
 
   test('Verify main page structure', async ({ page }) => {
-    // Verify Wikipedia wordmark logo
+    // Verify Wikipedia logo
     await expect(page.locator('.mw-logo-wordmark')).toBeVisible();
     
     // Verify welcome title
     await expect(page.locator('text=Welcome to Wikipedia')).toBeVisible();
     
-    // Verify search box exists - use first() to avoid strict mode violation
+    // Verify search box
     const searchBox = page.locator('input[name="search"]').first();
     await expect(searchBox).toBeVisible();
     
@@ -168,7 +168,7 @@ test.describe('Wikipedia Main Page Tests', () => {
     const featuredArticle = page.locator('#mp-tfa');
     await expect(featuredArticle).toBeVisible({ timeout: 10000 });
     
-    // Verify there's content in the featured article
+    // Verify content in the featured article
     const articleContent = await featuredArticle.textContent();
     expect(articleContent).toBeTruthy();
     expect(articleContent.length).toBeGreaterThan(100);
