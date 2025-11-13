@@ -1,16 +1,16 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Wikipedia Aira Compact Page Tests', () => {
+test.describe('Wikipedia Roland TB-303 Page Tests', () => {
   test.beforeEach(async ({ page }) => {
-    // Navigate to Wikipedia Aira Compact page
-    await page.goto('https://en.wikipedia.org/wiki/Aira_Compact', { timeout: 110_000 });
+    // Navigate to Wikipedia Roland TB-303 page
+    await page.goto('https://en.wikipedia.org/wiki/Roland_TB-303', { timeout: 110_000 });
   });
 
   test('Verify article page structure', async ({ page }) => {
     // Verify Wikipedia logo
     await expect(page.locator('.mw-logo-wordmark')).toBeVisible();
     // Verify article title
-    await expect(page.locator('h1#firstHeading')).toHaveText('Aira Compact');
+    await expect(page.locator('h1#firstHeading')).toHaveText('Roland TB-303');
     // Verify search box
     const searchBox = page.locator('input[name="search"]').first();
     await expect(searchBox).toBeVisible();
@@ -20,9 +20,9 @@ test.describe('Wikipedia Aira Compact Page Tests', () => {
   test('Verify all content sections', async ({ page }) => {
     // List of expected main sections
     const sections = [
-      'Release',
-      'Design',
-      'Reception',
+      'Design and features',
+      'Legacy',
+      'Successors',
       'References'
     ];
     // Verify each section by its text
@@ -46,7 +46,7 @@ test.describe('Wikipedia Aira Compact Page Tests', () => {
       'Current events',
       'Random article',
       'About Wikipedia',
-      'Contact us',
+      'Contact us'
     ];
     // Verify each menu link
     for (const link of menuLinks) {
@@ -82,7 +82,7 @@ test.describe('Wikipedia Aira Compact Page Tests', () => {
       'Privacy policy',
       'About Wikipedia',
       'Disclaimers',
-      'Contact Wikipedia',
+      'Contact Wikipedia'
     ];
     for (const link of footerLinks) {
       const element = page.locator(`#footer a:has-text("${link}")`).first();
@@ -92,22 +92,30 @@ test.describe('Wikipedia Aira Compact Page Tests', () => {
     console.log('Footer links verified correctly.');
   });
 
-  test('Verify models subsections', async ({ page }) => {
-    // List of expected model subsections
-    const models = [
-      'T-8 Beat Machine',
-      'J-6 Chord Synthesizer',
-      'E-4 Voice Tweaker',
-      'S-1 Tweak Synth',
-      'P-6 Creative Sampler'
+  test('Verify the complete content of the technical specifications', async ({ page }) => {
+    // Wait for the infobox with features to appear
+    const infobox = page.locator('.infobox').first();
+    await expect(infobox).toBeVisible();
+    // Complete list of expected texts from the specifications
+    const textosEsperados = [
+      'ManufacturerRoland',
+      'Dates1981–1984',
+      'PriceUK £238 (£1152 in 2023), US $395 ($1366 in 2024)',
+      'Polyphonymonophonic',
+      'Timbralitymonotimbral',
+      'OscillatorSawtooth and square wave',
+      'LFOnone',
+      'Synthesis typeAnalog subtractive',
+      'Filter24 dB/oct low-pass resonant filter, non-self-oscillating',
+      'Aftertouch expressionNo',
+      'Velocity expressionNo',
+      'Storage memory64 patterns, 7 songs, 1 track',
+      'EffectsNo internal effects.',
+      'Keyboard16 pattern keys'
     ];
-    // Verify each model subsection
-    for (const model of models) {
-      const element = page.locator(`h4:has-text("${model}")`).first();
-      await expect(element).toBeVisible({ timeout: 10000 });
-      console.log(`Model subsection verified: ${model}`);
+    for (const texto of textosEsperados) {
+      await expect(infobox).toContainText(texto);
     }
-    console.log('Models subsections verified correctly.');
+    console.log('All technical specifications verified correctly.');
   });
 });
-

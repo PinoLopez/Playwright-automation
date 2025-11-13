@@ -176,3 +176,4 @@ test.describe('Wikipedia Main Page Tests', () => {
     console.log('Featured article section verified correctly.');
   });
 });
+
