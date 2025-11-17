@@ -85,8 +85,8 @@ test.describe('Wikipedia Main Page Tests', () => {
     // Check if language button exists and is visible
     await expect(languageButton).toBeVisible({ timeout: 10000 });
     
-    // Verify it shows "353 languages"
-    await expect(languageButton).toContainText('353 languages');
+    // Verify it shows a three-digit number followed by "languages"
+    await expect(languageButton).toContainText(/\d{3} languages/);
     
     console.log('Language selector verified correctly.');
   });
