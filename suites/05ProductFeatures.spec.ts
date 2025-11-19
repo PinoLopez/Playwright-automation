@@ -104,3 +104,4 @@ test('Verify the Software emulations section', async ({ page }) => {
   console.log(' - TAL U-NO-62 mentioned');
   console.log(' - Arturia Chorus JUN-6 mentioned');
 });
+
