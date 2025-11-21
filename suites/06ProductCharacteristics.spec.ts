@@ -74,3 +74,4 @@ test.describe('Wikipedia USB Hardware Page Characteristics', () => {
     console.log('Compatibility table verified correctly.');
   });
 });
+
