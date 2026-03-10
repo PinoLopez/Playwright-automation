@@ -96,11 +96,15 @@ test.describe('Wikipedia Roland TB-303 Page Tests', () => {
     // Wait for the infobox with features to appear
     const infobox = page.locator('.infobox').first();
     await expect(infobox).toBeVisible();
-    // Complete list of expected texts from the specifications
-    const textosEsperados = [
+
+    // Expected texts from the specifications
+    const textosEsperados: (string | RegExp)[] = [
       'ManufacturerRoland',
       'Dates1981–1984',
-      'PriceUK £238 (£1152 in 2023), US $395 ($1366 in 2024)',
+
+      // Flexible price match (inflation-adjusted values change over time)
+      /PriceUK £238 \(£\d+ in \d{4}\), US \$395 \(\$\d+ in \d{4}\)/,
+
       'Polyphonymonophonic',
       'Timbralitymonotimbral',
       'OscillatorSawtooth and square wave',
@@ -113,10 +117,11 @@ test.describe('Wikipedia Roland TB-303 Page Tests', () => {
       'EffectsNo internal effects.',
       'Keyboard16 pattern keys'
     ];
+
     for (const texto of textosEsperados) {
       await expect(infobox).toContainText(texto);
     }
+
     console.log('All technical specifications verified correctly.');
   });
 });
-
